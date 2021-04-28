@@ -1,0 +1,84 @@
+package com.auroled.connection;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.List;
+//import java.util.TreeMap;
+
+//import org.json.JSONObject;
+
+public class Convertion {
+
+	/*
+	 * public static JSONObject getMapToJson(TreeMap<Integer, String>
+	 * sortedPlayerMapList) { JSONObject jsonData = null; try { jsonData = new
+	 * JSONObject(sortedPlayerMapList); } catch (Exception e) {
+	 * System.out.println("Error while getiing json data"); }
+	 * 
+	 * return jsonData;
+	 * 
+	 * }
+	 */
+
+	
+	
+	public static void generateCSVForBattingBowlingTeam(List<BattingBowlingTeams> battingBowlingTeamList){
+	       PrintWriter pw = null;
+	    String filePath = "Batting_Bowling_team.csv";
+	    StringBuilder sb = new StringBuilder();
+	    try {
+	      pw = new PrintWriter(new File(filePath));
+	      
+	      sb.append("RCB" + "," + "DC" + "\r\n" + "\r\n");
+	     
+
+	      for(BattingBowlingTeams list : battingBowlingTeamLis){
+	          sb.append(list.getBatting_team+","+list.getBowling_team);
+	      }
+
+	      System.out.println("CSV file generatd successfully with the name" + filePath);
+
+	    } catch (FileNotFoundException e) {
+	      System.out.println("Error while generating" + filePath + " file");
+	      System.out.println("Please close recently opened " + filePath + " .If it is opened");
+	      e.printStackTrace();
+	    } finally {
+	      pw.write(sb.toString());
+	      pw.close();
+	    }
+	      
+	  }
+	
+	
+	public static void generateCSVFile(List<List<String>> totalTeamList, int firstTeamSize) {
+		PrintWriter pw = null;
+		String filePath = "cricket_team.csv";
+		StringBuilder sb = new StringBuilder();
+		try {
+			pw = new PrintWriter(new File(filePath));
+
+			sb.append("Player Name\r\n");
+			int totalTeamPlayers = totalTeamList.get(0).size() ;
+			System.out.println("total Players " + totalTeamPlayers);
+			for (int i = 0; i < totalTeamPlayers; i++) {
+
+				sb.append(totalTeamList.get(0).get(i) + "," + totalTeamList.get(1).get(i));
+				sb.append("\r\n");
+
+			}
+
+			System.out.println("CSV file generatd successfully with the name " + filePath);
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Error while generating" + filePath + " file");
+			System.out.println("Please close recently opened " + filePath + " .If it is opened");
+			e.printStackTrace();
+		} finally {
+			pw.write(sb.toString());
+			pw.close();
+		}
+
+	}
+
+}

@@ -1,0 +1,88 @@
+package com.auroled.connection;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.supercsv.io.*;
+import org.supercsv.prefs.CsvPreference;
+
+
+import org.json.JSONObject;
+import org.supercsv.io.ICsvMapWriter;
+
+public class Convertion {
+
+	public static JSONObject getMapToJson(TreeMap<Integer, String> sortedPlayerMapList) {
+		JSONObject jsonData = null;
+		try {
+			jsonData = new JSONObject(sortedPlayerMapList);
+		} catch (Exception e) {
+			System.out.println("Error while getiing json data");
+		}
+
+		return jsonData;
+
+	}
+
+	
+	  public static void getCSVFile(TreeMap<Integer, String> sortedPlayerMapList) {
+	  PrintWriter pw = null;
+	   
+	  String date = new Date().toString();
+	  Sring fileName = date+"cricket_team.csv";
+	  try { pw = new PrintWriter(new File(fileName)); } catch
+	  (FileNotFoundException e) { e.printStackTrace(); } StringBuilder sb = new
+	  StringBuilder();
+	  
+	  for (Entry<Integer, String> entry : sortedPlayerMapList.entrySet()) {
+	  
+	  sb.append("Player"+entry.getKey().toString());
+	  sb.append(",");
+	  sb.append(entry.getValue().toString());
+	  sb.append(",");
+	  sb.append(" ");
+	  sb.append("\r\n");
+	  
+	  } pw.write(sb.toString()); pw.close(); System.out.println("Finished");
+	  
+	  }
+	 
+	
+	public static void generateCSVFile(Map<String, String> sortedPlayerMapList) throws IOException {
+		
+		ICsvMapWriter writer  = new CsvMapWriter(new FileWriter("person.csv"), CsvPreference.EXCEL_PREFERENCE);
+		try {
+			
+			 
+			 final String[] header = new String[] {"Sl No","name"};
+			
+		        writer.writeHeader(header);
+		        writer.write(sortedPlayerMapList, header);
+		       
+
+		        System.out.println("Writing Completed...!");
+			 
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		} finally {
+	      
+				writer.close();
+			
+	      }
+	}
+
+}

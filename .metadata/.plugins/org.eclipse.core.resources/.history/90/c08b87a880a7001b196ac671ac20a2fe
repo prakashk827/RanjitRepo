@@ -1,0 +1,256 @@
+package com.auroled.connection;
+
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import com.auroled.entity.BattingBowlingTeams;
+
+public class QueryStatement extends EstablishConnection {
+
+	static List<Map<String, Object>> dataBaseList = new ArrayList<>();
+
+	static Map<String, Object> mapList = new HashMap();
+	static EstablishConnection ec = new EstablishConnection();
+	static Statement st;
+
+	Convertion c = new Convertion();
+
+	public static void getBattingBowlingTeam(String query) {
+		List<BattingBowlingTeams> battingBowlingTeamList = new ArrayList<>();
+		ec.getConnection();
+
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+
+			while (set.next()) {
+
+				battingBowlingTeamList
+						.add((new BattingBowlingTeams(set.getString("batting_team"), set.getString("bowling_team"))));
+
+				mapList.put("Match Code = ", set.getObject("match_code"));
+				mapList.put("Batting Team = ", set.getObject("batting_team"));
+				mapList.put("Bowling Team = ", set.getObject("bowling_team"));
+				dataBaseList.add(mapList);
+
+			}
+
+			Convertion.generateCSVForBattingBowlingTeam(battingBowlingTeamList);
+		} catch (Exception e) {
+			System.out.println("Error in getTeamNames Method");
+		}
+	}
+
+	public static List<String> getTeamNames(String query) {
+
+		ec.getConnection();
+
+		List<String> teamList = new ArrayList<>();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+			String captain = "";
+			String keeper = " ";
+
+			while (set.next()) {
+				if (set.getString("captain").equals("CAP")) {
+					captain = " (" + " C " + ")";
+				} else {
+					captain = "";
+				}
+				if (set.getString("keeper").equals("WK")) {
+					keeper = " (" + " WK " + ")";
+				} else {
+					keeper = "";
+				}
+				teamList.add(set.getString("dynamic_name") + captain + keeper);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error in getTeamNames Method");
+		}
+		return teamList;
+
+	}
+
+	public static void getBatsmanInformation(String query) {
+		ec.getConnection();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+
+			while (set.next()) {
+
+				mapList.put("Batsman Player Name = ", set.getObject("player_name"));
+
+				dataBaseList.add(mapList);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error in getBatsmanInformation Method");
+		}
+
+	}
+
+	public static void getBowlingInformatiom(String query) {
+		ec.getConnection();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+
+			while (set.next()) {
+
+				mapList.put("Bowler Player Name = ", set.getObject("player_name"));
+
+				dataBaseList.add(mapList);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error in getBowlingInformatiom Method" + e.getMessage());
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void getExtrasInformatiom(String query) {
+		ec.getConnection();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+
+			while (set.next()) {
+
+				mapList.put("Total Score = ", set.getObject("total_score"));
+				mapList.put("Wickets = ", set.getObject("wickets"));
+				mapList.put("Minutes = ", set.getObject("Minutes"));
+				mapList.put("Bowling End = ", set.getObject("bowling_end"));
+				mapList.put("Innings = ", set.getObject("innings"));
+				mapList.put("Overs = ", set.getObject("overs"));
+				mapList.put("Penalties = ", set.getObject("penalties"));
+				mapList.put("Byes = ", set.getObject("byes"));
+				mapList.put("Leg Byes = ", set.getObject("leg_byes"));
+
+				dataBaseList.add(mapList);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error in getExtrasInformatiom Method");
+		}
+
+	}
+
+	public static void getExtraScoreInformatiom(String query) {
+		ec.getConnection();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+
+			while (set.next()) {
+
+				mapList.put("Striker Name = ", set.getObject("strikername"));
+				mapList.put("Ball = ", set.getObject("ball"));
+
+				dataBaseList.add(mapList);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error in getExtraScoreInformatiom Method");
+		}
+
+	}
+
+	public static void getFallOfWicketDetails(String query) {
+		ec.getConnection();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+
+			while (set.next()) {
+
+				mapList.put("Batsman Name = ", set.getObject("batsmanname"));
+				mapList.put("Type of Wicket = ", set.getObject("typeofwicket"));
+				mapList.put("Time = ", set.getObject("time"));
+				mapList.put("Total SCore = ", set.getObject("totalScore"));
+
+				dataBaseList.add(mapList);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error in getFallOfWicketDetails Method");
+		}
+
+	}
+
+	public static void getMatchInformation(String query) {
+		ec.getConnection();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+
+			while (set.next()) {
+
+				mapList.put("Number Of Overs = ", set.getObject("number_of_overs"));
+				mapList.put("Super Over = ", set.getObject("superover"));
+				mapList.put("Target Run = ", set.getObject("target_run"));
+				mapList.put("M start Date = ", set.getObject("mstartdate"));
+
+				dataBaseList.add(mapList);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error in getMatchInformation Method");
+		}
+
+	}
+
+	public static void getMatchScoreDetails(String query) {
+
+		ec.getConnection();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+
+			while (set.next()) {
+
+				mapList.put("Striker Name = ", set.getObject("strikername"));
+				mapList.put("Bowler Name = ", set.getObject("bowlername"));
+				mapList.put("Run = ", set.getObject("run"));
+
+				dataBaseList.add(mapList);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error in getMatchScoreDetails Method");
+		}
+
+		for (Map<String, Object> list : dataBaseList) {
+
+			for (Entry<String, Object> entry : list.entrySet()) {
+				System.out.println(" " + entry.getKey() + entry.getValue());
+
+			}
+
+		}
+	}
+
+	public static void getTextFile() {
+
+		// Convertion.generateTextFile(dataBaseList);
+
+	}
+
+}

@@ -1,0 +1,76 @@
+package com.auroled.connection;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.auroled.entity.BattingBowlingTeams;
+
+public class QueryStatement extends EstablishConnection {
+	
+	static EstablishConnection ec = new EstablishConnection();
+	static Statement st;
+	
+	
+	
+	 public static void getBattingBowlingTeam(String query){
+	        List<BattingBowlingTeams> battingBowlingTeamList = new ArrayList<>();
+	        ec.getConnection();
+	        
+	        try {
+				st = con.createStatement();
+				ResultSet set = st.executeQuery(query);
+			
+				
+				while (set.next()) {
+					
+					battingBowlingTeamList.add((new BattingBowlingTeams(set.getString("batting_team"),set.getString("bowling_team"))));
+
+				}
+			Convertion.generateCSVForBattingBowlingTeam(battingBowlingTeamList);
+			} catch (Exception e) {
+				System.out.println("Error in getTeamNames Method");
+			}
+	  } 
+	 
+	 
+
+	public static List<String> getTeamNames(String query) {
+		
+		ec.getConnection();
+		List<String> teamList = new ArrayList<>();
+		List<Object> obj = new ArrayList<>();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+			String captain="";
+			String keeper = " ";
+			
+			while (set.next()) {
+				
+				obj.add(set.getObject(2));
+				
+				if (set.getString("captain").equals("CAP")) {
+					captain = " (" + " C " + ")";
+				} else {
+					captain = "";
+				}
+				if (set.getString("keeper").equals("WK")) {
+					keeper = " (" + " WK " + ")";
+				} else {
+					keeper = "";
+				}
+				teamList.add(set.getString("dynamic_name") + captain + keeper);
+			}	
+			System.out.println("Objec " +obj);
+		} catch (Exception e) {
+			System.out.println("Error in getTeamNames Method");
+		}
+		return teamList;
+		
+	}
+	
+	
+
+}

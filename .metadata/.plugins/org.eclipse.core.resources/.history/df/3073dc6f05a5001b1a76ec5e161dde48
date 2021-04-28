@@ -1,0 +1,13 @@
+package com.auroled.connection;
+
+import java.sql.Statement;
+import java.util.List;
+
+public class QueryStatement {
+	Statement st ;
+	public static void selectFirstTeam(String query1, List<String> team1List) {
+		
+		
+	}
+
+}

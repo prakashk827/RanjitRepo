@@ -1,0 +1,48 @@
+package com.auroled.connection;
+
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.json.JSONObject;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) {
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		String query = "select * from batting_team";
+		Statement st;
+		
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+			Map<String, String> playerMapList = new HashMap<>();
+			int count = 0;
+			String key=null;
+			while (set.next()) {
+				count=count+1;
+				key = "player"+count;
+				playerMapList.put(key, set.getString("name"));
+			}
+			
+			  
+		    for(Entry<String, String> entry : playerMapList.entrySet()) {
+		    	
+		    	System.out.println(entry.getKey()+" "+entry.getValue());
+		    }
+		    
+		    JSONObject jsonData = new JSONObject(playerMapList);
+	        System.out.println(jsonData);
+			
+		} catch (Exception e) {
+			System.out.println("Error While fetching data from batting_bowling_teams table");
+		}
+		
+		
+	}
+}

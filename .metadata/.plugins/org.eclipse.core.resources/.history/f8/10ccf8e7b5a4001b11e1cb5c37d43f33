@@ -1,0 +1,68 @@
+package com.auroled.connection;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+import org.json.JSONObject;
+
+import org.supercsv.io.CsvMapWriter;
+import org.supercsv.io.ICsvMapWriter;
+import org.supercsv.prefs.CsvPreference;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) throws IOException {
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		String query = "select * from batting_team";
+		Statement st;
+		Map<String, String> playerMapList = new HashMap<>();
+		
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+
+			int count = 0;
+			String key = null;
+
+			while (set.next()) {
+				count = count + 1;
+				key = "player" + count;
+				playerMapList.put(key, set.getString("name"));
+			}
+
+			for (Entry<String, String> entry : sortedPlayerMapList.entrySet()) {
+
+				System.out.println(entry.getKey() + " " + entry.getValue());
+			}
+
+			JSONObject jsonData = new JSONObject(playerMapList);
+			System.out.println(jsonData);
+
+		} catch (Exception e) {
+			System.out.println("Error While fetching data from batting_bowling_teams table");
+		}
+
+		/*
+		 * ICsvMapWriter writer = new CsvMapWriter(new
+		 * FileWriter("C:\\Users\\user\\Desktop\\person.csv"),
+		 * CsvPreference.EXCEL_PREFERENCE); try { final String[] header = new String[] {
+		 * "Sl No", "name" };
+		 * 
+		 * writer.writeHeader(header); writer.write(playerMapList, header);
+		 * System.out.println("Writing Completed...!");
+		 * 
+		 * } catch (Exception e) { System.out.println("err" + e.getMessage());
+		 * e.printStackTrace(); } finally { writer.close(); }
+		 */
+
+	}
+}

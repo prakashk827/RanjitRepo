@@ -1,0 +1,77 @@
+package com.auroled.connection;
+
+
+import java.io.StringWriter;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.json.JSONObject;
+
+import org.supercsv.io.CsvMapWriter;
+import org.supercsv.prefs.CsvPreference;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) {
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		String query = "select * from batting_team";
+		Statement st;
+		Map<String, String> playerMapList = new HashMap<>();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+			
+			int count = 0;
+			String key=null;
+			
+			while (set.next()) {
+				count=count+1;
+				key = "player"+count;
+				playerMapList.put(key, set.getString("name"));
+			}
+			  
+		    for(Entry<String, String> entry : playerMapList.entrySet()) {
+		    	
+		    	System.out.println(entry.getKey()+" "+entry.getValue());
+		    }
+		    
+		    JSONObject jsonData = new JSONObject(playerMapList);
+	        System.out.println(jsonData);
+			
+		} catch (Exception e) {
+			System.out.println("Error While fetching data from batting_bowling_teams table");
+		}
+		
+		try {
+			StringWriter sw = new StringWriter();
+			CsvMapWriter writer = new CsvMapWriter(sw, CsvPreference.STANDARD_PREFERENCE);
+		    
+
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("name", "Sriram");
+			data.put("age", 2);
+			data.put("hobby", "Chess");
+			
+			String [] headers = { "name", "age", "hobby" };
+			writer.writeHeader(headers);
+			writer.write(data, headers);
+			writer.write(data, headers);
+			writer.write(data, headers);
+			writer.close();
+			
+			
+			
+			System.out.println("Generated CSV : \n");
+			System.out.println(sw.toString());
+		} catch (Exception e) {
+			System.out.println("Error while generating csv file"+e.getMessage());
+		}
+		
+		
+	}
+}

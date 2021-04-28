@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+G:\AuroLed\mysql to json\.metadata\.plugins\org.eclipse.jdt.core
+3050298511.index
+3529115643.index
+32264133.index
+4288314401.index

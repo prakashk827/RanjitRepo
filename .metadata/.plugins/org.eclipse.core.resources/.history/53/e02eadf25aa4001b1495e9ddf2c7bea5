@@ -1,0 +1,29 @@
+package com.auroled.connection;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) {
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		String query = "select * from batting_bowling_teams";
+		Statement st;
+		
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+			while (set.next()) {
+				System.out.println("Match Code : " + set.getString("match_code"));
+				System.out.println("Batting Team : " + set.getString("batting_team"));
+				System.out.println("Bowling Team : " + set.getString("bowling_team"));
+			}
+		} catch (Exception e) {
+			System.out.println("Error");
+		}
+		
+		
+	}
+}

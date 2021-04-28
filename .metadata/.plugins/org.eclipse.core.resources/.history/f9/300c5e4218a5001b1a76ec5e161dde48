@@ -1,0 +1,44 @@
+package com.auroled.connection;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class QueryStatement extends EstablishConnection {
+	static Statement st;
+	
+	
+	public static List<String> getTeamNames(String query) {
+		List<String> teamList = new ArrayList<>();
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+			String captain="";
+			String keeper = " ";
+			
+			while (set.next()) {
+				if (set.getString("captain").equals("CAP")) {
+					captain = " (" + " C " + ")";
+				} else {
+					captain = "";
+				}
+				if (set.getString("keeper").equals("WK")) {
+					keeper = " (" + " WK " + ")";
+				} else {
+					keeper = "";
+				}
+				teamList.add(set.getString("dynamic_name") + captain + keeper);
+
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error in selectFirstTeam Method");
+		}
+		return teamList;
+		
+	}
+	
+	
+
+}

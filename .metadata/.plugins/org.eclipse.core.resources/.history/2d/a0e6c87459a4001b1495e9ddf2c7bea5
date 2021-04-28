@@ -1,0 +1,6 @@
+package com.auroled.connection;
+
+public static class ConnectionParameters {
+	
+	
+}

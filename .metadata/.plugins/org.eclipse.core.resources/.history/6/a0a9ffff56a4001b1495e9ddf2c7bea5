@@ -1,0 +1,22 @@
+package com.auroled.connection;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class ConnectionParameters {
+	public boolean getConnection() {
+		try {
+			//1. Loading Driver
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Driver loaded...");
+			//2.Establishing Connection
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket_scoring","root","");
+			System.out.println("Connection established...");
+		} catch (Exception e) {
+			
+		}
+		
+		
+		return true;
+	}
+}

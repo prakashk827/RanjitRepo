@@ -1,0 +1,29 @@
+package com.auroled.connection;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) {
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		String query = "select * from batting_bowling_teams";
+		Statement st;
+		
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+			int playerCount = 0;
+			
+			while (set.next()) {
+				
+			}
+		} catch (Exception e) {
+			System.out.println("Error While fetching data from batting_bowling_teams table");
+		}
+		
+		
+	}
+}

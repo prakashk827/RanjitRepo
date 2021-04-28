@@ -1,0 +1,31 @@
+package com.auroled.connection;
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapToCSV {
+	
+	
+	public static void main(String[] args) {
+		
+		Map<Integer, String> mapList = new HashMap<>();
+		
+		mapList.put(1, "India");
+		mapList.put(2, "Pakistan");
+		mapList.put(3, "Bangladesh");
+		
+		PrintWriter pw = null;
+		String filePath = "MapList.csv";
+		StringBuilder sb = new StringBuilder();
+		pw = new PrintWriter(new File(filePath));
+		for (Map.Entry<Integer,String> entry : mapList.entrySet())
+			
+			System.out.println("Key = " + entry.getKey() +
+                             ", Value = " + entry.getValue());
+    }
+ 		
+	
+
+}

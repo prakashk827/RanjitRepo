@@ -1,0 +1,23 @@
+1619198057027	Rename type 'ConnectionParameters'
+1619199326683	Rename field 'conParameters'
+1619199504210	Rename type 'Conection'
+1619200708475	Rename local variable 'set'
+1619204446658	Rename local variable 'playerCount'
+1619204469774	Rename local variable 'countPlayer'
+1619244533125	Rename type 'MapToJSON'
+1619245564927	Delete element
+1619245800365	Delete element
+1619246061389	Delete element
+1619246064569	Delete elements
+1619246156041	Delete element
+1619246215835	Delete element
+1619246221986	Delete element
+1619247012909	Delete elements
+1619247952581	Delete elements
+1619254086718	Delete elements
+1619268932853	Rename local variable 'set'
+1619269292697	Rename local variable 'fileName'
+1619272610824	Rename local variable 'query'
+1619273561233	Rename local variable 'list'
+1619280809897	Rename local variable 'teamSet1'
+1619280865413	Rename method 'selectFirstTeam'

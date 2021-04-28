@@ -1,0 +1,11 @@
+========Batting Bowling Team========
+Match Code = KKRDC1504
+Batting Team = DC
+Bowling Team = KKR
+========Batsman Information========
+========Bowling Informatiom========
+========Extras Informatiom========
+========Extra Score Informatiom========
+========FallOfWicket Details========
+========Match Information========
+========Match ScoreDetails========

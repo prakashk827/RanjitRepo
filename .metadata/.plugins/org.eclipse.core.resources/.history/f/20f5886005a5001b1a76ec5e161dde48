@@ -1,0 +1,12 @@
+package com.auroled.connection;
+
+import java.util.List;
+
+public class QueryStatement {
+
+	public static void selectFirstTeam(String query1, List<String> team1List) {
+		
+		
+	}
+
+}

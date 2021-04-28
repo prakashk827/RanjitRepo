@@ -1,0 +1,31 @@
+package com.auroled.connection;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) throws IOException {
+
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		List<String> totalTeamList = new ArrayList<>();
+
+		List<String> team1List = new ArrayList<>();
+		String query1 = "select * from away_team_information";
+		totalTeamList = QueryStatement.getTeamNames(query1);
+		int team1Size = totalTeamList.size();
+		
+		
+
+		
+		String query2 = "select * from home_team_information";
+		totalTeamList = QueryStatement.getTeamNames(query2);
+		
+
+		Convertion.generateCSVFile(totalTeamList,team1Size);
+
+	}
+}

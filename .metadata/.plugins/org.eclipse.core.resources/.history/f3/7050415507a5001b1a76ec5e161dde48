@@ -1,0 +1,24 @@
+package com.auroled.connection;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) throws IOException {
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		String query1 = "select * from away_team_information";
+		
+		List<String> team1List = new ArrayList<>();
+		List<String> team2List = new ArrayList<>();
+		
+		team1List = QueryStatement.selectFirstTeam(query1);
+		team2List = QueryStatement.selectFirstTeam(query1);
+		
+		
+
+	}
+}

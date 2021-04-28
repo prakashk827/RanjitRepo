@@ -1,0 +1,30 @@
+package com.auroled.connection;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+
+		
+
+		List<List<String>> totalTeamList = new ArrayList<>();
+
+		List<String> team1List = new ArrayList<>();
+		String query1 = "select * from away_team_information";
+		team1List = QueryStatement.getTeamNames(query1);
+		totalTeamList.add(team1List);
+
+		List<String> team2List = new ArrayList<>();
+		String query2 = "select * from home_team_information";
+		team2List = QueryStatement.getTeamNames(query2);
+		totalTeamList.add(team2List);
+		
+		
+
+		//Convertion.generateCSVFile(totalTeamList,team1List.size());
+
+	}
+}

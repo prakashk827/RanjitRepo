@@ -1,0 +1,53 @@
+package com.auroled.connection;
+
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) throws IOException {
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		String query = "select * from away_team_information";
+		Statement st;
+		List<String> team1List = new ArrayList<>();
+
+		try {
+			st = con.createStatement();
+			ResultSet teamSet1 = st.executeQuery(query);
+
+			String captain = " ";
+			String keeper = " ";
+			while (teamSet1.next()) {
+								if (teamSet1.getString("captain").equals("CAP")) {
+					captain = " (" + " C " + ")";
+				} else {
+					captain = "";
+				}
+				if (teamSet1.getString("keeper").equals("WK")) {
+					keeper = " (" + " WK " + ")";
+				} else {
+					keeper = "";
+				}
+				team1List.add(teamSet1.getString("dynamic_name") + captain + keeper);
+
+			}
+
+			
+			Convertion.generateCSVFile(team1List);
+			// Converting map to json
+			// System.out.println(Convertion.getMapToJson(sortedPlayerMapList));
+
+		} catch (Exception e) {
+			System.out.println("Error While fetching data from batting_bowling_teams table");
+		}
+
+	}
+}

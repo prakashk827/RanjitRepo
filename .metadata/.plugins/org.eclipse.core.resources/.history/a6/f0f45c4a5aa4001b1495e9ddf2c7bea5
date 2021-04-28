@@ -1,0 +1,36 @@
+package com.auroled.connection;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class EstablishConnection {
+	static Connection con = null;
+	ConnectionParameters conParameters = new ConnectionParameters();
+	public void getConnection() {
+		
+		try {
+			//1. Loading Driver
+			Class.forName(conParameters.getDriverName());
+			System.out.println("Driver loaded...");
+			//2.Establishing Connection
+			try {
+				con = DriverManager.getConnection(conParameters.getUrl()+conParameters.getDbName(),conParameters.getUserName()
+						,conParameters.getPassword());
+				System.out.println("Connection established...");
+			} catch (SQLException e) {
+				System.out.println("Error while establishing connection between database");
+				System.out.println("Please check database name , user name and password");
+				e.printStackTrace();
+				e.printStackTrace();
+			}
+			
+		} catch (ClassNotFoundException e) {
+			System.out.println("Error while loading mysql driver");
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+}

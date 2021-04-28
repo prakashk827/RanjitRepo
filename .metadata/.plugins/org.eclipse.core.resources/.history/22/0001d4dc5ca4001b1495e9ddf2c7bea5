@@ -1,0 +1,33 @@
+package com.auroled.connection;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) {
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		String query = "select * from batting_bowling_teams";
+		Statement st;
+		
+		try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+			int playerCount = 0;
+			Map<String,String> playerList = new HashMap<>();
+			String key = null;
+			while (set.next()) {
+				key="player"+playerCount;
+				
+			}
+		} catch (Exception e) {
+			System.out.println("Error While fetching data from batting_bowling_teams table");
+		}
+		
+		
+	}
+}

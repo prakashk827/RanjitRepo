@@ -1,0 +1,72 @@
+package com.auroled.connection;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+public class Main extends EstablishConnection {
+
+	public static void main(String[] args) throws IOException {
+		EstablishConnection ec = new EstablishConnection();
+		ec.getConnection();
+
+		String query = "select * from away_team_information";
+		Statement st;
+		Map<Integer, String> playerMapList = new HashMap<>();
+		TreeMap<Integer, String> sortedPlayerMapList = new TreeMap<>();
+		 
+		
+		  try {
+			st = con.createStatement();
+			ResultSet set = st.executeQuery(query);
+			
+		  
+			int count = 0;
+			String captain = " ";
+			String keeper = " ";
+			while (set.next()) {
+				count = count + 1;
+				if(set.getString("captain").equals("CAP")) {
+					captain = "'(" + 'C' + " )'";
+				} else {
+					captain ="";
+				}
+				if(set.getString("keeper").equals("WK")) {
+					keeper = "'(" + 'C' + " )'";
+				} else {
+					keeper="";
+				}
+				playerMapList.put(count, set.getString("dynamic_name") + captain+ keeper);
+				
+				
+			}
+			
+			
+			sortedPlayerMapList.putAll(playerMapList);
+			
+			for (Entry<Integer, String> entry : sortedPlayerMapList.entrySet()) {
+				System.out.println(entry.getKey());
+				System.out.println(entry.getValue());
+			}
+			Convertion.getCSVFile(sortedPlayerMapList);
+			
+			// Convertion.generateCSVFile(sortedPlayerMapList);
+			
+			
+			
+
+			System.out.println(Convertion.getMapToJson(sortedPlayerMapList));
+
+		} catch (Exception e) {
+			System.out.println("Error While fetching data from batting_bowling_teams table");
+		}
+		
+
+	}
+}
