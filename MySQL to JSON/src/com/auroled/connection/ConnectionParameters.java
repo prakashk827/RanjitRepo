@@ -7,7 +7,7 @@ public class ConnectionParameters {
 	private static final String DB_NAME = "cricket_scoring";
 	private static final String DB_USER = "root";
 	private static final String DB_PASSWORD ="";
-	
+	//hi ranjit
 	public static String getDriverName() {
 		return DRIVER_NAME;
 	}
